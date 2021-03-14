@@ -9,14 +9,14 @@ __gl_get_proc :: fn (proc_name: string) *u8 {
     ip :: cast(s64) p;
     if ip != 0 && ip != 0x1 && ip != 0x2 && ip != 0x3 { return p; }
 
-    module, err1 :: dl.open("opengl32");
+    module, err1 :: Dl.open("opengl32");
     if !is_ok(err1) {
         panic("GL Error: %", err1);
         return null;
     }
-    defer dl.close(module);
+    defer Dl.close(module);
 
-    sym, err2 :: dl.sym(module, proc_name);
+    sym, err2 :: Dl.sym(module, proc_name);
     if !is_ok(err2) {
         print_err("GL Error: %", err2);
         return null;
