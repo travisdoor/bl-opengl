@@ -529,15 +529,15 @@ _Gl :: struct {
 gl: _Gl;
 
 glInit :: fn () {
-    tmp := string_new();
-    defer string_delete(tmp);
+    tmp := String.new();
+    defer String.delete(tmp);
     
     info :: cast(*TypeInfoStruct) typeinfo(_Gl);
     loop i := 0; i < info.members.len; i += 1 {
         member :: info.members[i];
         dest_member_ptr := ptr_shift_bytes(cast(*u8) &gl, auto member.offset_bytes);
-        string_clear(&tmp);
-        string_concatenate(&tmp, "gl", member.name);
+        String.clear(&tmp);
+        String.concatenate(&tmp, "gl", member.name);
         proc :: __gl_get_proc(tmp);
         if proc == null {
             print_warn("GL extension '%' not found.", tmp);
